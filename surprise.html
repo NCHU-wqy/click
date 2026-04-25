@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>🤡 小黑的专属整蛊空间 🤡</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none; /* 让整蛊更“突然”，防止快速复制文字 */
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #1a1f2e 0%, #2a1e2c 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', 'Poppins', 'Comic Neue', 'Press Start 2P', cursive, system-ui, -apple-system;
+            padding: 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+            transition: filter 0.1s ease;
+        }
+
+        /* 整蛊震动动画 */
+        .shake-global {
+            animation: globalShake 0.08s infinite;
+        }
+
+        @keyframes globalShake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            25% { transform: translate(-1px, -2px) rotate(0.5deg); }
+            50% { transform: translate(-2px, 1px) rotate(-0.5deg); }
+            75% { transform: translate(1px, -1px) rotate(0.3deg); }
+            100% { transform: translate(1px, 2px) rotate(-0.2deg); }
+        }
+
+        /* 主体卡片 */
+        .trick-card {
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(12px);
+            border-radius: 3.5rem;
+            padding: 2rem 2rem 2.5rem;
+            max-width: 650px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 30px 40px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 200, 100, 0.4);
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 3rem;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #ffc371, #ff5f6d);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 8px rgba(255, 80, 80, 0.5);
+            margin-bottom: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .subhead {
+            color: #ffe0b5;
+            font-weight: 500;
+            background: #2c1a28a0;
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 1.1rem;
+            margin-bottom: 1.8rem;
+            backdrop-filter: blur(2px);
+        }
+
+        .avatar-trap {
+            background: #261a24;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 5px #ffaf7a, 0 15px 25px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .avatar-trap:active {
+            transform: scale(0.97);
+        }
+        .avatar-trap span {
+            font-size: 5rem;
+            filter: drop-shadow(2px 4px 6px black);
+        }
+
+        .question {
+            font-size: 1.7rem;
+            background: #00000066;
+            padding: 0.7rem;
+            border-radius: 60px;
+            margin: 1rem 0;
+            color: #fff0cf;
+            font-weight: bold;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem;
+            margin: 1.8rem 0 1rem;
+        }
+
+        .trick-btn {
+            background: #ff4d6d;
+            border: none;
+            padding: 0.9rem 1.8rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 60px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #9e2a3e;
+            transition: 0.07s linear;
+            font-family: monospace;
+            letter-spacing: 2px;
+        }
+        .trick-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #9e2a3e;
+        }
+
+        .reset-btn {
+            background: #3a2c3f;
+            box-shadow: 0 5px 0 #1f1622;
+        }
+
+        .joke-area {
+            margin-top: 2rem;
+            background: #150e17bb;
+            border-radius: 2rem;
+            padding: 1rem;
+            font-size: 1.2rem;
+            color: #fcd9b8;
+            border-left: 6px solid #ff9f4a;
+            text-align: left;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s;
+            word-break: break-word;
+        }
+
+        .footer-note {
+            font-size: 0.7rem;
+            margin-top: 1.8rem;
+            color: #b2957a;
+            opacity: 0.8;
+        }
+
+        /* 小黑专属弹窗风格 */
+        .custom-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.25s;
+            font-family: monospace;
+        }
+
+        .custom-modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-box {
+            background: #2d212b;
+            max-width: 400px;
+            width: 85%;
+            border-radius: 48px;
+            padding: 1.8rem 1.5rem 2rem;
+            text-align: center;
+            border: 3px solid #ff8866;
+            box-shadow: 0 20px 35px black;
+            transform: scale(0.9);
+            transition: transform 0.2s cubic-bezier(0.34, 1.2, 0.64, 1);
+        }
+        .active .modal-box {
+            transform: scale(1);
+        }
+        .modal-box h3 {
+            font-size: 2rem;
+            color: #ffbc6e;
+            margin-bottom: 1rem;
+        }
+        .modal-box p {
+            font-size: 1.25rem;
+            margin: 1rem 0;
+            color: #fce2c1;
+        }
+        .modal-box button {
+            background: #ff6b4a;
+            border: none;
+            margin-top: 1rem;
+            padding: 0.6rem 1.8rem;
+            font-size: 1.2rem;
+            border-radius: 60px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+        }
+        /* 闪烁效果 */
+        .blink-text {
+            animation: blink 0.4s infinite alternate;
+            font-weight: bold;
+        }
+        @keyframes blink {
+            0% { opacity: 0.2; text-shadow: 0 0 0 red;}
+            100% { opacity: 1; text-shadow: 0 0 6px red;}
+        }
+        /* 随机掉落小鬼css */
+        .random-emojis {
+            position: fixed;
+            pointer-events: none;
+            font-size: 2rem;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .falling-emoji {
+            position: absolute;
+            font-size: 2rem;
+            animation: fallLinear 2s forwards;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        @keyframes fallLinear {
+            0% {
+                transform: translateY(-20px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        /* 小丑鼻子特效 */
+        .clown-nose {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 3rem;
+            filter: drop-shadow(0 0 5px red);
+            cursor: pointer;
+            z-index: 99;
+            transition: 0.1s;
+        }
+        .clown-nose:active {
+            transform: scale(0.8);
+        }
+    </style>
+</head>
+<body>
+
+<div class="random-emojis" id="emojiRainContainer"></div>
+<div class="clown-nose" id="clownNose">🔴🤡</div>
+
+<div class="trick-card" id="mainCard">
+    <div class="avatar-trap" id="avatarTrap">
+        <span>🐶👓</span>
+    </div>
+    <h1>⚡ 小黑 · 整蛊工坊 ⚡</h1>
+    <div class="subhead">✨ 亲爱的小黑，准备好接受惊喜了吗 ✨</div>
+
+    <div class="question" id="dynamicQuestion">
+        🤔 小黑，你觉得自己今天幸运吗？ 🤔
+    </div>
+
+    <div class="btn-group">
+        <button class="trick-btn" id="trickBtn">🎲 整蛊启动 🎲</button>
+        <button class="trick-btn reset-btn" id="resetBtn">😇 重置元神 😇</button>
+    </div>
+
+    <div class="joke-area" id="jokeBox">
+        💡 温馨提示：点击「整蛊启动」将会触发随机的整蛊法术！<br>
+        ⚠️ 整蛊内容包括：变声警告、弹窗突袭、假系统消息、好友恶搞...
+    </div>
+    <div class="footer-note">
+        🃏 小黑专属 · 整蛊指数 MAX 🃏
+    </div>
+</div>
+
+<script>
+    // ------------------- 整蛊大典（套路小黑专属）-----------------
+    // 整蛊行为库 —— 每个都是经典“好朋友”整蛊梗
+    const trickMessages = [
+        { title: "📱 假系统警告", msg: "【系统提示】检测到您的手机将在5秒内自动播放《最炫民族风》！请立刻向小黑认怂！🐶" },
+        { title: "🐸 青蛙护体", msg: "呱呱呱！小黑被神秘青蛙诅咒——接下来三天说话结尾必须加上‘呱’，否则好运消失！呱！" },
+        { title: "💻 黑客特效", msg: "⚠️ ERROR！小黑，你的电脑已被“好朋友病毒”入侵，需要给群发‘我是小猪’方能解除 ⚠️" },
+        { title: "😈 暗黑契约", msg: "远古整蛊魔神降临！小黑必须立刻大喊三声“我最帅” 然后踢一下椅子腿，否则晚上做噩梦！" },
+        { title: "📸 社死瞬间", msg: "咔擦！虚拟相机已拍摄小黑懵逼瞬间，将设置为你的手机壁纸1小时 🤣" },
+        { title: "🤖 Siri 整蛊", msg: "小黑你好，我是Siri。根据指令，我要告诉你：你今天的袜子颜色迷之好笑 👾" },
+        { title: "🎭 假视频通话", msg: "📞 来自“老妈”的视频请求 — 千万别接！是整蛊！但心跳加速了吧哈哈哈" },
+        { title: "🕺 强制舞蹈", msg: "小黑! 请在原地扭屁股3下，不然你的微信头像会有三天顶着一坨💩 (假装)" },
+        { title: "🎲 命运轮盘", msg: "轮盘结果：小黑要请好朋友喝奶茶！ (虽然这里是虚拟，但建议你自觉行动)" },
+        { title: "🔊 最大音量", msg: "⚡ 模拟手机音量失控！此时你心里已经一激灵了吧？ 整蛊成功！" },
+        { title: "👻 幽灵协议", msg: "你背后有东西？ 别回头！这是我写给你的鬼故事开头，请配合害怕一下哈哈哈哈" },
+        { title: "🍕 披萨诈骗", msg: "叮咚！门口有外卖 —— 但是并没有！你被空气披萨整蛊到了！饿了吗小黑？" }
+    ];
+
+    // 特殊整蛊扩展: 震动/闪烁/掉落表情 等
+    let shakeInterval = null;
+    let originalTitle = document.title;
+    let blinkTitleInterval = null;
+    let isShaking = false;
+    let modalActive = false;
+
+    // 获取dom元素
+    const trickBtn = document.getElementById('trickBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const jokeBox = document.getElementById('jokeBox');
+    const mainCard = document.getElementById('mainCard');
+    const avatarTrap = document.getElementById('avatarTrap');
+    const dynamicQuestion = document.getElementById('dynamicQuestion');
+    const clownNose = document.getElementById('clownNose');
+
+    // 辅助: 飘落随机emoji
+    function startEmojiRain(count = 18) {
+        const container = document.getElementById('emojiRainContainer');
+        const emojis = ['💩', '🐸', '🤡', '👻', '🎃', '💣', '🐛', '🦷', '🧨', '🔫', '🐙', '🍌', '🧦', '🎲', '😈', '🤪', '🐶'];
+        for(let i=0; i<count; i++) {
+            const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+            const div = document.createElement('div');
+            div.classList.add('falling-emoji');
+            div.innerText = emoji;
+            const leftPos = Math.random() * 95;
+            const size = 1.2 + Math.random() * 1.8;
+            div.style.left = leftPos + '%';
+            div.style.fontSize = (size * 1.5) + 'rem';
+            div.style.position = 'absolute';
+            div.style.top = '-50px';
+            div.style.opacity = 0.7 + Math.random() * 0.5;
+            const duration = 1.5 + Math.random() * 2;
+            div.style.animation = `fallLinear ${duration}s forwards`;
+            container.appendChild(div);
+            setTimeout(() => { if(div && div.remove) div.remove(); }, duration * 1000);
+        }
+    }
+
+    // 闪烁标题整蛊
+    function startBlinkTitle() {
+        if(blinkTitleInterval) clearInterval(blinkTitleInterval);
+        let toggle = false;
+        blinkTitleInterval = setInterval(() => {
+            if(!modalActive) {
+                document.title = toggle ? "⚡ 小黑！别跑 ⚡" : "🤡 整蛊进行中 🤡";
+                toggle = !toggle;
+            } else {
+                document.title = "😈 小黑上当啦 😈";
+            }
+        }, 500);
+    }
+
+    function stopBlinkTitle() {
+        if(blinkTitleInterval) {
+            clearInterval(blinkTitleInterval);
+            blinkTitleInterval = null;
+        }
+        document.title = originalTitle;
+    }
+
+    // 震动画面
+    function startScreenShake(duration = 2500) {
+        if(isShaking) return;
+        isShaking = true;
+        document.body.classList.add('shake-global');
+        setTimeout(() => {
+            if(document.body) document.body.classList.remove('shake-global');
+            isShaking = false;
+        }, duration);
+    }
+
+    // 随机整蛊弹窗 (更搞笑的模态框)
+    function showTrickModal(trickData) {
+        if(modalActive) return;
+        modalActive = true;
+        // 创建模态窗
+        const existingModal = document.querySelector('.custom-modal');
+        if(existingModal) existingModal.remove();
+
+        const modalDiv = document.createElement('div');
+        modalDiv.className = 'custom-modal';
+        modalDiv.innerHTML = `
+            <div class="modal-box">
+                <h3>${trickData.title}</h3>
+                <p>${trickData.msg}</p>
+                <button id="modalCloseBtn">😭 小黑错了 😭</button>
+            </div>
+        `;
+        document.body.appendChild(modalDiv);
+        setTimeout(() => modalDiv.classList.add('active'), 20);
+
+        const closeHandler = () => {
+            modalDiv.classList.remove('active');
+            setTimeout(() => {
+                if(modalDiv && modalDiv.remove) modalDiv.remove();
+                modalActive = false;
+                // 关闭后搞笑一下
+                jokeBox.innerHTML = `🎉 整蛊完成！小黑已被“关爱” 🎉 <br> 💢 整蛊记录: ${trickData.title} —— ${trickData.msg.substring(0, 40)}...`;
+                // 追加额外作用: 替换一个问题
+                dynamicQuestion.innerHTML = randomQuestionAfterTrick();
+            }, 200);
+        };
+        const btn = modalDiv.querySelector('#modalCloseBtn');
+        btn.addEventListener('click', closeHandler);
+        // 防止背景点击关闭，必须点按钮才有仪式感
+    }
+
+    function randomQuestionAfterTrick() {
+        const questions = [
+            "😂 小黑，刺激吗？再来一次？ 😂",
+            "👀 感觉如何？小黑不敢点按钮了吧？ 👀",
+            "🤯 整蛊能量已注入，小黑请保持微笑！ 🤯",
+            "💀 友情提示：你已经被整蛊之神盯上 💀",
+            "🧨 前方高能！但重置可解除异常状态 🧨"
+        ];
+        return questions[Math.floor(Math.random() * questions.length)];
+    }
+
+    // 假语音整蛊: 调用浏览器speech? 为了效果，有的浏览器会请求权限，我们换方式：播放Audio? 可以用alert提示? 用震动更有趣
+    function fakeVoiceTrick() {
+        // 模拟用alert+文字搞笑，因为自动语音需要用户交互，我们不用太强硬，就用动态文字冒充
+        jokeBox.innerHTML = "🔊 模拟语音：「小黑同学，你的好朋友正在对你使用整蛊权杖，请立刻投降！」 🔊<br> (整蛊音箱已生效)";
+        dynamicQuestion.innerHTML = "🗣️ 听到奇怪的声音了吗？那就是魔法！";
+        startScreenShake(800);
+        startEmojiRain(12);
+    }
+
+    // 巨型整蛊集合 (包含多种随机特效)
+    function performSuperTrick() {
+        // 随机从库中选一个经典整蛊消息
+        const randomIndex = Math.floor(Math.random() * trickMessages.length);
+        const selectedTrick = trickMessages[randomIndex];
+
+        // 增加额外随机小整蛊动作
+        const extraEffect = Math.floor(Math.random() * 4);
+        // 启动标题闪烁
+        startBlinkTitle();
+        // 半数情况启动震动
+        if(Math.random() > 0.3) {
+            startScreenShake(1200);
+        }
+        // 随机掉落表情雨
+        startEmojiRain(22);
+
+        // 额外搞笑: 改变卡片背景临时特效
+        mainCard.style.transition = "0.2s";
+        mainCard.style.transform = "scale(1.01)";
+        setTimeout(() => { mainCard.style.transform = ""; }, 200);
+
+        // 额外效果种类
+        switch(extraEffect) {
+            case 0:
+                // 假滚动警告
+                jokeBox.innerHTML = `⚠️⚠️⚠️ 警告！小黑你的屏幕即将旋转！⚠️⚠️⚠️ <br> 实际并没有，但你的心慌了。哈哈 ${selectedTrick.title} 乱入`;
+                break;
+            case 1:
+                // 改变头像陷阱
+                avatarTrap.innerHTML = "<span>👾🤡👾</span>";
+                setTimeout(() => { avatarTrap.innerHTML = "<span>🐶👓</span>"; }, 1800);
+                break;
+            case 2:
+                // 模拟假键盘
+                dynamicQuestion.innerHTML = "⌨️ 小黑电脑被入侵：正在输入‘我是小猪’... 快点取消！";
+                break;
+            default:
+                dynamicQuestion.innerHTML = randomQuestionAfterTrick();
+        }
+
+        // 核心啊: 弹出全屏整蛊弹窗
+        showTrickModal(selectedTrick);
+
+        // 额外多重弹窗? 只做一个主要弹窗够了，再加彩蛋: 鼻子特效
+        const clown = document.getElementById('clownNose');
+        clown.style.transform = "scale(1.3)";
+        setTimeout(() => { if(clown) clown.style.transform = ""; }, 500);
+
+        // 记录到joke最后
+        setTimeout(() => {
+            if(!modalActive) {
+                // 如果弹窗意外未开，补充显示
+            }
+        }, 100);
+    }
+
+    // 重置所有整蛊效果（关闭标题闪烁，停止震动，清除多余模态窗，恢复正常）
+    function resetEverything() {
+        // 停止标题闪烁
+        stopBlinkTitle();
+        // 停止震动效果
+        if(isShaking) {
+            document.body.classList.remove('shake-global');
+            isShaking = false;
+        }
+        // 移除存在的模态框
+        const existModal = document.querySelector('.custom-modal');
+        if(existModal) {
+            existModal.classList.remove('active');
+            setTimeout(() => existModal.remove(), 150);
+            modalActive = false;
+        }
+        // 恢复标题
+        document.title = originalTitle;
+        // 恢复主视觉
+        dynamicQuestion.innerHTML = "✨ 小黑，整蛊已被重置，你安全了 ✨";
+        jokeBox.innerHTML = "🧹 重置完成！整蛊魔法暂时消失。但是小黑你要小心，说不定还会好奇再点按钮 😈";
+        avatarTrap.innerHTML = "<span>🐶👓</span>";
+        mainCard.style.transform = "";
+        // 清除飘落的残余容器内的多余元素可选（让自然消失）
+        // 再发送一条可爱提示
+        startEmojiRain(5);
+        // 额外搞笑: 提示重置成功
+        const tempMsg = document.createElement('div');
+        tempMsg.innerText = "✅ 小黑获得短暂宁静 ✅";
+        tempMsg.style.position = "fixed";
+        tempMsg.style.bottom = "50%";
+        tempMsg.style.left = "50%";
+        tempMsg.style.transform = "translate(-50%, -50%)";
+        tempMsg.style.backgroundColor = "black";
+        tempMsg.style.color = "lime";
+        tempMsg.style.padding = "12px 24px";
+        tempMsg.style.borderRadius = "40px";
+        tempMsg.style.zIndex = "2000";
+        tempMsg.style.fontWeight = "bold";
+        tempMsg.style.fontSize = "1.3rem";
+        tempMsg.style.fontFamily = "monospace";
+        document.body.appendChild(tempMsg);
+        setTimeout(() => tempMsg.remove(), 1500);
+    }
+
+    // 额外整蛊彩蛋: 点击小丑鼻子会触发假笑+ 放屁声模拟(无声音但幽默)
+    function clownNosePrank() {
+        jokeBox.innerHTML = "🤡 噗~~~ 小黑你按了我鼻子！ 你被臭屁攻击啦！ 🤡<br> 整蛊值 +100 ! 乖乖接受命运吧";
+        startEmojiRain(14);
+        dynamicQuestion.innerHTML = "💨 谁放屁了？小黑快看你脚下！(开玩笑的)";
+        startScreenShake(400);
+        // 如果标题没闪烁的话让标题闪一下
+        if(!blinkTitleInterval) {
+            startBlinkTitle();
+            setTimeout(() => {
+                if(blinkTitleInterval && !modalActive) stopBlinkTitle();
+            }, 3000);
+        }
+    }
+
+    // 让整蛊按钮强烈触发
+    trickBtn.addEventListener('click', () => {
+        // 如果当前有弹窗未关闭，避免叠加，先提示一下假消息
+        if(modalActive) {
+            jokeBox.innerHTML = "😜 先关掉当前的整蛊弹窗再继续整蛊吧！点弹窗按钮～ 别急，小黑。";
+            return;
+        }
+        performSuperTrick();
+    });
+
+    resetBtn.addEventListener('click', () => {
+        resetEverything();
+    });
+
+    // 点击头像也会触发送小整蛊 (轻量级)
+    avatarTrap.addEventListener('click', () => {
+        if(modalActive) {
+            jokeBox.innerHTML = "别急，先把弹窗关了再戏弄小黑！😈";
+            return;
+        }
+        const lightTricks = [
+            { title: "💢 挠痒痒攻击", msg: "小黑被虚拟羽毛疯狂挠痒痒！哈哈哈哈你笑了没？" },
+            { title: "🐶 汪汪队立大功", msg: "突然小黑变成了一只可爱柴犬！请对着屏幕汪三声 :)" },
+            { title: "📸 截图威胁", msg: "咔嚓！已截图小黑呆滞表情，将发朋友圈(善意的整蛊)" }
+        ];
+        const rand = lightTricks[Math.floor(Math.random() * lightTricks.length)];
+        showTrickModal(rand);
+        startEmojiRain(8);
+    });
+
+    clownNose.addEventListener('click', () => {
+        if(modalActive) {
+            jokeBox.innerHTML = "现在弹窗中，小黑先处理大事吧😂";
+            return;
+        }
+        clownNosePrank();
+    });
+
+    // 随机打开页面后，欢迎整蛊氛围，先偷偷笑一下
+    setTimeout(() => {
+        jokeBox.innerHTML = "🎈 小黑, 欢迎来到为你量身定制的整蛊乐园！按「整蛊启动」体验好朋友的“关爱” 🎈<br> 放心，重置可以让你满血复活！整蛊无害，快乐加倍～";
+        dynamicQuestion.innerHTML = "🤔 小黑，你准备好面对疾风了吗？ 🤔";
+    }, 500);
+
+    // 防止连点导致太多弹窗, 已经处理modalActive
+    // 额外加一点防止多次震动就好了
+    // 最后再秀一下: 每隔一段时间整蛊提醒？不需要自动，得让小黑主动触发
+    // 但是为了更有整蛊沉浸感，首次加载后5秒 提示小心！
+    setTimeout(() => {
+        if(!modalActive) {
+            jokeBox.innerHTML += "<br> 🚨 悄悄告诉你：点按小丑鼻子有惊喜哦~ 🚨";
+        }
+    }, 2000);
+</script>
+</body>
+</html>
