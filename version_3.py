@@ -49,7 +49,7 @@ class ScrollableFrame(ttk.Frame):
 class TicketClickerGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("抢票自动点击器 v3.2 - 滚轮支持版")
+        self.root.title("抢票自动点击器 v3.2")
         self.root.geometry("800x800")
 
         # 设置窗口最小尺寸
@@ -92,7 +92,7 @@ class TicketClickerGUI:
         title_frame.grid(row=0, column=0, sticky="ew", pady=10)
         title_frame.grid_columnconfigure(0, weight=1)
 
-        title_label = tk.Label(title_frame, text="抢票自动点击器 - 支持滚轮和全屏",
+        title_label = tk.Label(title_frame, text="抢票自动点击器",
                                font=("Arial", 18, "bold"), fg="#333")
         title_label.grid(row=0, column=0)
 
