@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import pyautogui
 import threading
+import math
 import time
 import json
 import os
